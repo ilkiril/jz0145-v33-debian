@@ -46,6 +46,7 @@ docs/01-hardware.md     board, eMMC geometry, partition offsets, UART levels
 docs/02-flashing.md     EDL flash order, GPT rebuild, boot args
 docs/03-usb-gadget.md   configfs gadget (RNDIS + ACM console)
 docs/04-firmware.md     restoring modem/persist for WiFi + modem
+docs/05-replication.md  checklist to rebuild the whole thing (K0–K8)
 scripts/                the actual scripts used, sanitised
 captures/               boot logs and error output as evidence
 ```
