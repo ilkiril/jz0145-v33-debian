@@ -60,3 +60,5 @@ terminal are worthless in a bug report; plain logs are not.
 ## License
 
 MIT. Take it, fork it, correct it.
+
+<img width="1386" height="467" alt="image" src="https://github.com/user-attachments/assets/787077b0-1fc8-420f-8b15-cb5c3fa56063" />
