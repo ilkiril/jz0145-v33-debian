@@ -42,12 +42,13 @@ Full detail in [`docs/`](docs).
 ## Layout
 
 ```
+docs/00-downloads.md    pinned sources, expected file sizes
 docs/01-hardware.md     board, eMMC geometry, partition offsets, UART levels
 docs/02-flashing.md     EDL flash order, GPT rebuild, boot args
 docs/03-usb-gadget.md   configfs gadget (RNDIS + ACM console)
 docs/04-firmware.md     restoring modem/persist for WiFi + modem
 docs/05-replication.md  checklist to rebuild the whole thing (K0–K8)
-scripts/                the actual scripts used, sanitised
+scripts/                rebuild_gpt.py, usb-gadget.sh, serial_console.py
 captures/               boot logs and error output as evidence
 ```
 
@@ -56,6 +57,22 @@ captures/               boot logs and error output as evidence
 `captures/` contains the raw serial output for the failure modes above — the kernel
 Oops, the configfs `Operation not permitted`, the `wcnss.mdt` error. Screenshots of a
 terminal are worthless in a bug report; plain logs are not.
+
+## Known limitations (measured, not guessed)
+
+- **Only one CPU.** `maxcpus=1` is required; with four cores the CPR kernel panics in
+  the idle/hotplug path. The other three A53s stay idle.
+- **No WiFi monitor mode.** `wcn36xx` has no monitor interface — no packet capture of
+  foreign traffic, no wardriving.
+- **No USB host.** The controller runs peripheral-only; no hub, no storage, no printer.
+- **No GPIO, no camera.** UART, LEDs and the SIM slot are the only exposed hardware.
+- **LTE registration may be refused by the operator.** On this unit two different SIMs
+  on the same network (Vodafone DE) both end in
+  `registration-denied / roaming: on / limited`, while the same SIM registers fine in a
+  phone; signal is −89 dBm and the home PLMN matches the SIM. EFS was wiped and
+  rebuilt, firmware is `MPSS.DPM.2.0.c12`. Remaining suspect is a network-side device
+  (IMEI/EIR) block — check with the operator before assuming a config problem.
+- Booting takes ~51 s, RAM is 376 MiB usable, eMMC 3.43 GiB.
 
 ## License
 
